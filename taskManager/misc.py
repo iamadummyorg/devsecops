@@ -19,6 +19,7 @@
 """
 
 import os
+import shutil
 
 
 def store_uploaded_file(title, uploaded_file):
@@ -28,14 +29,9 @@ def store_uploaded_file(title, uploaded_file):
     if not os.path.exists(upload_dir_path):
         os.makedirs(upload_dir_path)
 
-    # A1: Injection (shell)
-    # Let's avoid the file corruption race condition!
-    os.system(
-        "mv " +
-        uploaded_file.temporary_file_path() +
-        " " +
-        "%s/%s" %
-        (upload_dir_path,
-         title))
+    # Safely move the uploaded file without invoking a shell
+    src_path = uploaded_file.temporary_file_path()
+    dest_path = os.path.join(upload_dir_path, title)
+    shutil.move(src_path, dest_path)
 
     return '/static/taskManager/uploads/%s' % (title)
