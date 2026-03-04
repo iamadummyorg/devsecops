@@ -17,6 +17,8 @@
 import os
 import sys
 
+SLACK_BOT_TOKEN=xoxb-123456789012-123456789012-abcdefghijklmnopqrstuvwx
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "taskManager.settings")
 
